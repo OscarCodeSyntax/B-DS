@@ -2,34 +2,34 @@
 
 **First Window :**
 
-cd C:\'Program Files'\MongoDB\server\7.0\bin
+cd C:\'Program Files'\MongoDB\server\7.0\bin <br />
 .\mongod
 
 
 **Login to admin**
 
-mongosh --host localhost -u myUserAdmin -p password --authenticationDatabase admin test
+mongosh --host localhost -u myUserAdmin -p password --authenticationDatabase admin test <br />
 
 
 **Change db**
 
-use admin
+use admin <br />
 
 
 **Show logged in user**
 
-db.runCommand({connectionStatus : 1})
+db.runCommand({connectionStatus : 1}) <br />
 
 
 **Enter databse - no login**
 
-mongosh --port 27017
+mongosh --port 27017 <br />
 
 
 **Mongo admin user**
 
 user: myUserAdmin
-password: password
+password: password <br />
 
 
 **MongoDB Notes:**
