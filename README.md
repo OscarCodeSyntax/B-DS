@@ -5,17 +5,21 @@
 cd C:\'Program Files'\MongoDB\server\7.0\bin
 .\mongod
 
+
 *Login to admin*
 
 mongosh --host localhost -u myUserAdmin -p password --authenticationDatabase admin test
+
 
 *Change db*
 
 use admin
 
+
 *Show logged in user*
 
 db.runCommand({connectionStatus : 1})
+
 
 *Enter databse - no login*
 
