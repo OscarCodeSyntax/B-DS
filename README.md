@@ -17,19 +17,21 @@
 
 
 **Show logged in user**
-
-> db.runCommand({connectionStatus : 1}) <br />
+```
+db.runCommand({connectionStatus : 1}) <br />
+```
 
 
 **Enter databse - no login**
-
-> mongosh --port 27017 <br />
-
+```
+mongosh --port 27017 <br />
+```
 
 **Mongo admin user**
-
-> user: myUserAdmin
-> password: password <br />
+```
+user: myUserAdmin 
+password: password <br />
+```
 
 
 **MongoDB Notes:**
@@ -40,12 +42,14 @@
 -------------------------------------------SECURITY LOGIN-----------------------------------
 
 **Create Roles for Application**
+```
 db.roles.insertMany([
    { name: "ROLE_USER" },
    { name: "ROLE_MODERATOR" },
    { name: "ROLE_ADMIN" },
 ])
+```
 
 **csrf tokens**
-https://www.baeldung.com/spring-security-csrf
+> https://www.baeldung.com/spring-security-csrf
 
