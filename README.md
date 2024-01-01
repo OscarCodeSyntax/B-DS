@@ -2,39 +2,39 @@
 
 **First Window :**
 
-cd C:\'Program Files'\MongoDB\server\7.0\bin <br />
-.\mongod
+> cd C:\'Program Files'\MongoDB\server\7.0\bin <br />
+> .\mongod
 
 
 **Login to admin**
 
-mongosh --host localhost -u myUserAdmin -p password --authenticationDatabase admin test <br />
+> mongosh --host localhost -u myUserAdmin -p password --authenticationDatabase admin test <br />
 
 
 **Change db**
 
-use admin <br />
+> use admin <br />
 
 
 **Show logged in user**
 
-db.runCommand({connectionStatus : 1}) <br />
+> db.runCommand({connectionStatus : 1}) <br />
 
 
 **Enter databse - no login**
 
-mongosh --port 27017 <br />
+> mongosh --port 27017 <br />
 
 
 **Mongo admin user**
 
-user: myUserAdmin
-password: password <br />
+> user: myUserAdmin
+> password: password <br />
 
 
 **MongoDB Notes:**
 
-Springboot is currently using the 'test' collection automatically
+> Springboot is currently using the 'test' collection automatically
 
 
 -------------------------------------------SECURITY LOGIN-----------------------------------
