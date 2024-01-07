@@ -1,10 +1,5 @@
 package com.apitemplate.security.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.apitemplate.security.jwt.JwtUtils;
 import com.apitemplate.security.models.ERole;
 import com.apitemplate.security.models.Role;
@@ -13,22 +8,23 @@ import com.apitemplate.security.payload.request.LoginRequest;
 import com.apitemplate.security.payload.request.SignupRequest;
 import com.apitemplate.security.payload.response.MessageResponse;
 import com.apitemplate.security.payload.response.UserInfoResponse;
-
 import com.apitemplate.security.repositories.RoleRepository;
 import com.apitemplate.security.repositories.UserRepository;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -102,13 +98,13 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "ADMIN":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case "mod":
+                    case "MOD":
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
@@ -129,9 +125,21 @@ public class AuthController {
     }
 
     @GetMapping("/logoutSuccess")
-    public HttpEntity<MessageResponse> ResponseEntity () {
-
-
+    public HttpEntity<MessageResponse> ResponseEntity() {
         return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
+    }
+
+    @DeleteMapping(value = "/admin/{username}")
+    public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
+
+        try {
+            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+            userRepository.delete(user);
+            return new ResponseEntity<>("Successfully deleted user", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("failed to delete user " + e);
+        }
+
+        return new ResponseEntity<>("Failed to delete user", HttpStatus.BAD_REQUEST);
     }
 }
