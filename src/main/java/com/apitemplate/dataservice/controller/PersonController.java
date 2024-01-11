@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person/")
+@RequestMapping("/api/person")
 public class PersonController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class PersonController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     public Person findById(@PathVariable("id") String id) {
         Person person = personService.getPerson(id);
         return person;
@@ -38,21 +38,14 @@ public class PersonController {
     }
 
     @CrossOrigin
-    @PutMapping(value = "{newName}")
+    @PutMapping(value = "/{newName}")
     @ResponseStatus(HttpStatus.OK)
     public void updateName(@PathVariable("newName") String newName, @RequestBody Person person) {
         personService.updateNameByName(person.getName(), newName);
     }
 
     @CrossOrigin
-    @PutMapping(value = "/age/{newAge}")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateAge(@PathVariable("newAge") int newAge, @RequestBody Person person) {
-        personService.updateAgeByName(person.getName(), newAge);
-    }
-
-    @CrossOrigin
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") String id) {
         personService.deletePerson(id);
