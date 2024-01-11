@@ -129,17 +129,5 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
     }
 
-    @DeleteMapping(value = "/admin/{username}")
-    public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
 
-        try {
-            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-            userRepository.delete(user);
-            return new ResponseEntity<>("Successfully deleted user", HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("failed to delete user " + e);
-        }
-
-        return new ResponseEntity<>("Failed to delete user", HttpStatus.BAD_REQUEST);
-    }
 }
