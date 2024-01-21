@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -58,11 +58,24 @@ public class AuthController {
 
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
+
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+//
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.set("Access-Control-Allow-Header", "Content-Type *");
+        headers.set(  "Access-Control-Allow-Methods",
+                "GET, POST, PUT, DELETE");
+        headers.set("Access-Control-Allow-Headers" , "Set-Cookie");
+        headers.set(HttpHeaders.SET_COOKIE, jwtCookie.toString());
+
+        return ResponseEntity.ok().headers(
+                headers)
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail(),
