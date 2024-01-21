@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -62,7 +62,11 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.SET_COOKIE, jwtCookie.toString());
+
+        return ResponseEntity.ok().headers(
+                headers)
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail(),
@@ -129,5 +133,17 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
     }
 
+    @DeleteMapping(value = "/admin/{username}")
+    public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
 
+        try {
+            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+            userRepository.delete(user);
+            return new ResponseEntity<>("Successfully deleted user", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("failed to delete user " + e);
+        }
+
+        return new ResponseEntity<>("Failed to delete user", HttpStatus.BAD_REQUEST);
+    }
 }

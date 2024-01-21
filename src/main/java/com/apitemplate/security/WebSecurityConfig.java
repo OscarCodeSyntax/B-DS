@@ -64,9 +64,9 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers("api/general/**").permitAll()
                                 .requestMatchers("api/person/**").permitAll()
                                 .anyRequest().authenticated()
+                        //by default, all other unspecified request will only be allowed access through authenticated means
                 )
                 .logout((logout) -> logout
                         .logoutUrl("/api/auth/logout")

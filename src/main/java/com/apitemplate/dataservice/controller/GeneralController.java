@@ -3,13 +3,13 @@ package com.apitemplate.dataservice.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/general")
 public
 class GeneralController {
 
-    @CrossOrigin
+
     @GetMapping
     public String[] findAll() {
 
@@ -21,7 +21,6 @@ class GeneralController {
         return response;
     }
 
-    @CrossOrigin
     @GetMapping(value = "{id}")
     public String findById(@PathVariable("id") Long id) {
 
@@ -31,7 +30,6 @@ class GeneralController {
         return "This is get by Id " + id;
     }
 
-    @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@RequestBody String resource) {
@@ -42,7 +40,6 @@ class GeneralController {
         return "This is create with resource : " + resource;
     }
 
-    @CrossOrigin
     @PutMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") Long id, @RequestBody String resource) {
@@ -55,7 +52,6 @@ class GeneralController {
 
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     public String delete(@PathVariable("id") Long id) {

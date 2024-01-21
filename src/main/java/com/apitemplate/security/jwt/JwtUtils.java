@@ -44,7 +44,7 @@ public class JwtUtils {
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername());
         //COOKIE HAS AN ENDPOINT VALUE THAT I NEEDED TO CHANGE
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(24 * 60 * 60).httpOnly(true).build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").secure(true).sameSite("None").maxAge(24 * 60 * 60).build();
         return cookie;
     }
 
