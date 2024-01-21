@@ -64,7 +64,6 @@ public class AuthController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.SET_COOKIE, jwtCookie.toString());
-        headers.set("Access-Control-Allow-Headers", "*");
 
         return ResponseEntity.ok().headers(
                 headers)
