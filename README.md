@@ -50,6 +50,11 @@ db.roles.insertMany([
 ])
 ```
 
+
+//HERE
+https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests
+
+
 **csrf tokens**
 > https://www.baeldung.com/spring-security-csrf
 

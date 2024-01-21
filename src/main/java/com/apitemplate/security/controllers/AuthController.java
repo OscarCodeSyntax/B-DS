@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -58,21 +58,13 @@ public class AuthController {
 
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-
-
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-//
-
         HttpHeaders headers = new HttpHeaders();
-
-        headers.set("Access-Control-Allow-Header", "Content-Type *");
-        headers.set(  "Access-Control-Allow-Methods",
-                "GET, POST, PUT, DELETE");
-        headers.set("Access-Control-Allow-Headers" , "Set-Cookie");
         headers.set(HttpHeaders.SET_COOKIE, jwtCookie.toString());
+        headers.set("Access-Control-Allow-Headers", "*");
 
         return ResponseEntity.ok().headers(
                 headers)
@@ -142,5 +134,17 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
     }
 
+    @DeleteMapping(value = "/admin/{username}")
+    public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
 
+        try {
+            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+            userRepository.delete(user);
+            return new ResponseEntity<>("Successfully deleted user", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("failed to delete user " + e);
+        }
+
+        return new ResponseEntity<>("Failed to delete user", HttpStatus.BAD_REQUEST);
+    }
 }
