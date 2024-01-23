@@ -38,26 +38,3 @@ password: password
 
 > Springboot is currently using the 'test' collection automatically
 
-
--------------------------------------------SECURITY LOGIN-----------------------------------
-
-**Create Roles for Application**
-```
-db.roles.insertMany([
-   { name: "ROLE_USER" },
-   { name: "ROLE_MODERATOR" },
-   { name: "ROLE_ADMIN" },
-])
-```
-
-
-//HERE
-https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests
-
-
-**csrf tokens**
-> https://www.baeldung.com/spring-security-csrf
-
-
-**Mock bank API**
-https://docs.yapily.com/pages/getting-started/get-started/
