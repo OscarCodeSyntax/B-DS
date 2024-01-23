@@ -66,7 +66,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("api/person/**").permitAll()
                                 .anyRequest().authenticated()
-                        //by default, all other unspecified request will only be allowed access through authenticated means
+                        //all requests to other endpoints will need to be an authenticated user
                 )
                 .logout((logout) -> logout
                         .logoutUrl("/api/auth/logout")
